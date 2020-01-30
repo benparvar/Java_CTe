@@ -8,3 +8,5 @@
 *.prefs
 .settings/org.eclipse.wst.common.component
 *.xml
+/java-cte.iml
+/.idea/.name

@@ -10,7 +10,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSSerializer;
-import sun.misc.BASE64Encoder;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
@@ -19,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMResult;
 import java.io.UnsupportedEncodingException;
 import java.security.*;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -60,12 +60,12 @@ public final class ObjetoCTeUtil {
         qrCode.append(chave);
         qrCode.append("&tpAmb=");
         qrCode.append(configuracoesCTe.getAmbiente().getCodigo());
-        if(chave.substring(34,35).equals("2")){
+        if (chave.substring(34, 35).equals("2")) {
             qrCode.append("&sign=");
             try {
                 qrCode.append(assinaSign(chave, configuracoesCTe.getCertificado()));
             } catch (Exception e) {
-                throw new CteException("Erro ao assinar Chave contingencia: "+e.getMessage());
+                throw new CteException("Erro ao assinar Chave contingencia: " + e.getMessage());
             }
         }
 
@@ -84,7 +84,7 @@ public final class ObjetoCTeUtil {
         sig.initSign(pkEntry.getPrivateKey());
         sig.update(data);
         byte[] signatureBytes = sig.sign();
-        return (new BASE64Encoder().encode(signatureBytes))
+        return (Base64.getEncoder().encode(signatureBytes)).toString()
                 .replaceAll("&#13;", "")
                 .replaceAll("\r\n", "")
                 .replaceAll("\n", "")
