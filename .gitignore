@@ -8,3 +8,5 @@
 *.xml
 /java-cte.iml
 /.idea/.name
+/.gradle/
+/build/
